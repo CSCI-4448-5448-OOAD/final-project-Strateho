@@ -2,10 +2,10 @@
 # Final Project(Project 5,6,7)
 
 Team Members:
-1. Name
-2. Name
+1. Kyle Paris
+2. Emma Worthington
 
-Java Version:
+Java Version: 21
 
 Additional Comments:
 
