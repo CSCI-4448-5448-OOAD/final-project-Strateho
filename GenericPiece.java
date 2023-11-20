@@ -1,19 +1,15 @@
-public class GenericPiece implements Decorator{
+public class GenericPiece implements Piece{
     private boolean alive;
-    private int[] location;
+    private char color;
 
-    public GenericPiece(int[] Location){
+    public GenericPiece(char color){
         alive = true;
-        assert Location.length == 2;
-        location = Location;
+        this.color = color;
     }
 
-    public int[] getLocation(){
-        return null;
-    }
 
     public char getColor(){
-        return ' ';
+        return color;
     }
 
     public int getVal(){

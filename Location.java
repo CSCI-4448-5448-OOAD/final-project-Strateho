@@ -1,5 +1,6 @@
 public class Location{
     private GenericPiece piece;
+    private boolean lake;
     private int x;
     private int y;
 
@@ -10,7 +11,11 @@ public class Location{
     }
 
     public boolean hasPiece(){
-        return false;
+        if (piece != null){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public GenericPiece getPiece(){
