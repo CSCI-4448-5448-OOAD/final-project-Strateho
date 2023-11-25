@@ -6,11 +6,19 @@ class GameDriver {
 
     public static void main(String[] args) {
         GameDriver game = new GameDriver();
-        while(true){
+        Player player1 = new Player('r');
+        Player player2 = new Player('b');
+        int[] size = {10,10};
+        Board b = new Board(size);
+        boolean play = true;
+         
+        while(play){
             Logger logger = Logger.getInstance(game.turn);
             game.addObserver(logger);
 
-            // game.playRound();
+            logger.update(player1.turn(b));
+            logger.update(player2.turn(b));
+
             game.turn++;
 
             game.turn++;
@@ -31,7 +39,7 @@ class GameDriver {
     public void removeObserver(Observer observer) {
         this.observers.remove(observer);
     }
-    
+
     // @Override
     // public void notifyObservers(Event event) {
     //     for (Observer observer : observers) {

@@ -89,4 +89,9 @@ public class Player {
             }
         }
     }
+
+    public String turn(Board b){
+        String event = "add functionality";
+        return event;
+    }
 }
