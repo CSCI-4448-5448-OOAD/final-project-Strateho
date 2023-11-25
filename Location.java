@@ -21,4 +21,8 @@ public class Location{
     public GenericPiece getPiece(){
         return piece;
     }
+
+    public void setPiece(GenericPiece gp){
+        piece = gp;
+    }
 }
