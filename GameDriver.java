@@ -12,4 +12,8 @@ class GameDriver {
             // game.removeObserver(logger);
         }
     }
+
+    public void setup(int numPlayers){
+        Board b = new Board(numPlayers);
+    }
 }

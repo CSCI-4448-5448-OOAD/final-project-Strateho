@@ -1,5 +1,7 @@
 public interface Piece{
     char getColor();
-    int getVal();
+    char getVal();
     void move(Board board);
+    void remove();
+    boolean canMove(Board board, int curX, int curY);
 }
