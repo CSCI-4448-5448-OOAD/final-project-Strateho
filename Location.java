@@ -38,4 +38,8 @@ public class Location{
             System.out.println("You cannot move a piece in a lake!");
         }
     }
+
+    public void setPiece(GenericPiece gp){
+        piece = gp;
+    }
 }
