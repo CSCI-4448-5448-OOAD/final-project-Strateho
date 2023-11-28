@@ -8,8 +8,7 @@ class GameDriver {
         GameDriver game = new GameDriver();
         Player player1 = new Player('r');
         Player player2 = new Player('b');
-        int[] size = {10,10};
-        // Board b = new Board(size);
+        Board b = new Board(2);
         boolean play = true;
         
         Logger logger = Logger.getInstance(game.turn);
@@ -23,8 +22,8 @@ class GameDriver {
             String t = "Turn " + game.turn;
             logger.update(t);
 
-            // logger.update(player1.turn(b));
-            // logger.update(player2.turn(b));
+            logger.update(player1.turn(b));
+            logger.update(player2.turn(b));
 
             logger.closeLogFile();
 
@@ -34,9 +33,9 @@ class GameDriver {
         }
     }
 
-    public void setup(int numPlayers){
-        // Board b = new Board(numPlayers);
-    }
+    // public void setup(int numPlayers){
+    //     Board b = new Board(numPlayers);
+    // }
     
     // public void addObserver(Observer observer) {
     //     observers.add(observer);
