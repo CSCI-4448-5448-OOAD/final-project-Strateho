@@ -91,7 +91,7 @@ public class Player {
     }
 
     public String turn(Board b){
-        String event = "add functionality";
+        String event = color + ": " + "add functionality";
         return event;
     }
 }
