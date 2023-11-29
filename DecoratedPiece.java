@@ -16,7 +16,7 @@ public abstract class DecoratedPiece implements Piece{
     }
 
     public void move(Board board){
-        piece.move(board);
+        
     }
 
     public void remove(){

@@ -80,40 +80,74 @@ public class Board {
         String BLUE = "\u001B[34m";
         String CYAN = "\u001B[36m";
         if (color == 'r'){
+            System.out.print("    ");
+            for (int i = 1; i <= 10; i++){
+                System.out.print(i + " ");
+            }
+            System.out.println();
+            System.out.println("   _____________________");
             for (int i = 0; i < 10; i++){
+                if (i+1 == 10){
+                    System.out.print(10 + "| ");
+                }else{
+                    System.out.print(i+1 + " | ");
+                }
                 for (int j = 0; j < 10; j++){
                     Piece current = board[j][i].getPiece();
                     if (current != null){
+                        //System.out.print(' ');
                         if (current.getColor() == 'r'){
                             System.out.print(RED + current.getVal() + RESET);
                         }else{
                             System.out.print(BLUE + '?' + RESET);
                         }
+                        System.out.print(' ');
                     }else{
                         if (board[j][i].isLake()){
-                            System.out.print(CYAN + '~' + RESET);
+                            if (j < 9 && board[j+1][i].isLake()){
+                                System.out.print(CYAN + "~~" + RESET);
+                            }else{
+                                System.out.print(CYAN + "~ " + RESET);
+                            }
                         }else{
-                            System.out.print(' ');
+                            System.out.print("  ");
                         }
                     }
                 }
                 System.out.println();
             }
         }else if (color == 'b'){
-            for (int i = 9; i >= 0; i--){
-                for (int j = 9; j >= 0; j--){
+            System.out.print("    ");
+            for (int i = 1; i <= 10; i++){
+                System.out.print(i + " ");
+            }
+            System.out.println();
+            System.out.println("   _____________________");
+            for (int i = 0; i < 10; i++){
+                if (i+1 == 10){
+                    System.out.print(10 + "| ");
+                }else{
+                    System.out.print(i+1 + " | ");
+                }
+                for (int j = 0; j < 10; j++){
                     Piece current = board[j][i].getPiece();
                     if (current != null){
+                        //System.out.print(' ');
                         if (current.getColor() == 'b'){
                             System.out.print(BLUE + current.getVal() + RESET);
                         }else{
                             System.out.print(RED + '?' + RESET);
                         }
+                        System.out.print(' ');
                     }else{
                         if (board[j][i].isLake()){
-                            System.out.print(CYAN + '~' + RESET);
+                            if (j < 9 && board[j+1][i].isLake()){
+                                System.out.print(CYAN + "~~" + RESET);
+                            }else{
+                                System.out.print(CYAN + "~ " + RESET);
+                            }
                         }else{
-                            System.out.print(' ');
+                            System.out.print("  ");
                         }
                     }
                 }

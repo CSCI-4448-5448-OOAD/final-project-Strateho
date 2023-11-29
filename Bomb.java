@@ -10,11 +10,12 @@ public class Bomb extends DecoratedPiece{
 
     @Override
     public void move(Board board){
-        //piece.move(board);
+        return;
     }
 
     @Override
     public boolean canMove(Board board, int curX, int curY){
+        System.out.println("I don't reccomend trying to move that, I think little timmy would agree if he was still with us.");
         return false;
     }
     

@@ -86,6 +86,9 @@ public class NumberedPiece extends DecoratedPiece{
                 i++;
             }
         }
+        if (!canMove){
+            System.out.println("There is no where for this piece to move!");
+        }
         return canMove;
     }
 }

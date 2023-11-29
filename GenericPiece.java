@@ -13,10 +13,11 @@ public class GenericPiece implements Piece{
     }
 
     public char getVal(){
-        return ' ';
+        return '-';
     }
 
     public void move(Board board){
+        System.out.println("Yeah uhh I don't really move like that.");
         return;
     }
 
