@@ -46,15 +46,22 @@ public class Player {
         int maxY = 10;
         int minY = 1;
         if (color == 'r'){
-            maxY = 10;
-            minY = 7;
-        }else{
             maxY = 4;
             minY = 1;
+        }else{
+            maxY = 10;
+            minY = 7;
         }
-        while (piecesLeft != 0){
+        boolean confirmedDone = false;
+        while (piecesLeft != 0 && confirmedDone == false){
             b.print(color);
-            System.out.println("What piece would you like to place? (f, b, s, 1-9)");
+            System.out.println("What piece would you like to place?");
+            System.out.println("f: flag");
+            System.out.println("b: bomb");
+            System.out.println("s: spy");
+            System.out.println("1-9: numbered piece");
+            System.out.println("r: randomize remaining pieces");
+            System.out.println("p: remove a piece");
             char piece = input.next().charAt(0);
             if (pieceSelector.containsKey(piece)){
                 String pieceName = pieceSelector.get(piece);
@@ -76,10 +83,11 @@ public class Player {
                         System.out.println("There is already a piece there. Would you like to remove it? (y/n)");
                         char remove = input.next().charAt(0);
                         if (remove == 'y'){
-                            b.removePiece(x, y);
+                            b.removePiece(x, y, true);
                             String oldPieceName = pieceSelector.get(Character.toLowerCase(current.getVal()));
                             availablePieces.put(pieceName, availablePieces.get(pieceName) - 1);
                             availablePieces.put(oldPieceName, availablePieces.get(oldPieceName) + 1);
+                            b.addPiece(piece, x, y);
                         }else{
                             System.out.println("You have not placed your " + pieceName + " yet.");
                         }
@@ -87,81 +95,131 @@ public class Player {
                 }else{
                     System.out.println("You have no more " + pieceName + "s left.");
                 }
+            }else{
+                if (piece == 'r'){
+                    System.out.println("Are you sure you want to randomize your remaining pieces? (y/n)");
+                    char randomize = input.next().charAt(0);
+                    if (randomize == 'y'){
+                        randomPlace(b, availablePieces);
+                        piecesLeft = 0;
+                    }else{
+                        System.out.println("Returning to piece selection.");
+                    }
+                }else if (piece == 'p'){
+                    if (piecesLeft == 40){
+                        System.out.println("You have not placed any pieces yet.");
+                        continue;
+                    }
+                    System.out.println("Where would you like to remove a piece?");
+                    int x = input.nextInt();
+                    int y = input.nextInt();
+                    while (x < 1 || x > 10 || y < minY || y > maxY){
+                        System.out.println("Invalid location. Please try again.");
+                        x = input.nextInt();
+                        y = input.nextInt();
+                    }
+                    Piece current = b.at(x, y);
+                    if (current instanceof GenericPiece){
+                        System.out.println("There is no piece there.");
+                    }else{
+                        String oldPieceName = pieceSelector.get(Character.toLowerCase(current.getVal()));
+                        availablePieces.put(oldPieceName, availablePieces.get(oldPieceName) + 1);
+                        b.removePiece(x, y, true);
+                        piecesLeft++;
+                    }
+                }
+                piecesLeft = 0;
+                for (String pieceName : availablePieces.keySet()){
+                    piecesLeft += availablePieces.get(pieceName);
+                }
             }
-            piecesLeft = 0;
-            for (String pieceName : availablePieces.keySet()){
-                piecesLeft += availablePieces.get(pieceName);
+            if (piecesLeft == 0){
+                b.print(color);
+                System.out.println("Are you sure you are done placing your pieces? (y/n)");
+                char done = input.next().charAt(0);
+                if (done == 'y'){
+                    confirmedDone = true;
+                }else{
+                    piecesLeft = -1;
+                }
             }
         }
+        
     }
 
-    public void randomPlace(Board b){
-        HashMap<String, Integer> availablePieces = new HashMap<String, Integer>();
+    public void randomPlace(Board b, HashMap<String, Integer> availablePieces){
+        if (availablePieces == null){
+            availablePieces = new HashMap<String, Integer>();
+            availablePieces.put("flag", 1);
+            availablePieces.put("bomb", 6);
+            availablePieces.put("spy", 1);
+            availablePieces.put("scout", 8);
+            availablePieces.put("miner", 5);
+            availablePieces.put("sergeant", 4);
+            availablePieces.put("lieutenant", 4);
+            availablePieces.put("captain", 4);
+            availablePieces.put("major", 3);
+            availablePieces.put("colonel", 2);
+            availablePieces.put("general", 1);
+            availablePieces.put("marshal", 1);
+        }
+        //HashMap<String, Integer> availablePieces = new HashMap<String, Integer>();
         HashMap<Character, String> pieceSelector = new HashMap<Character, String>();
-        availablePieces.put("flag", 1);
         pieceSelector.put('f', "flag");
-        availablePieces.put("bomb", 6);
         pieceSelector.put('b', "bomb");
-        availablePieces.put("spy", 1);
         pieceSelector.put('s', "spy");
-        availablePieces.put("scout", 8);
         pieceSelector.put('9', "scout");
-        availablePieces.put("miner", 5);
         pieceSelector.put('8', "miner");
-        availablePieces.put("sergeant", 4);
         pieceSelector.put('7', "sergeant");
-        availablePieces.put("lieutenant", 4);
         pieceSelector.put('6', "lieutenant");
-        availablePieces.put("captain", 4);
         pieceSelector.put('5', "captain");
-        availablePieces.put("major", 3);
         pieceSelector.put('4', "major");
-        availablePieces.put("colonel", 2);
         pieceSelector.put('3', "colonel");
-        availablePieces.put("general", 1);
         pieceSelector.put('2', "general");
-        availablePieces.put("marshal", 1);
         pieceSelector.put('1', "marshal");
 
-        int piecesLeft = 40;
+        int piecesLeft = 0;
+        for (String pieceName : availablePieces.keySet()){
+            piecesLeft += availablePieces.get(pieceName);
+        }
         int maxY = 10;
         int minY = 1;
         if (color == 'r'){
-            maxY = 10;
-            minY = 7;
-        }else{
             maxY = 4;
             minY = 1;
+        }else{
+            maxY = 10;
+            minY = 7;
         }
         int currentX = 1;
         int currentY = minY;
         while (piecesLeft != 0){
             char piece = '0';
             while (piece == '0'){
-                int rand = (int)(Math.random() * 12);
+                int rand = (int)(Math.random() * 40);
                 if (rand == 0){
                     piece = 'f';
-                }else if (rand == 1){
+                }else if (rand >= 1 && rand <= 6){
                     piece = 'b';
-                }else if (rand == 2){
-                    piece = 's';
-                }else if (rand == 3){
-                    piece = '9';
-                }else if (rand == 4){
-                    piece = '8';
-                }else if (rand == 5){
-                    piece = '7';
-                }else if (rand == 6){
-                    piece = '6';
                 }else if (rand == 7){
+                    piece = 's';
+                }else if (rand >= 8 && rand <= 15){
+                    piece = '9';
+                }else if (rand >= 16 && rand <= 20){
+                    piece = '8';
+                }else if (rand >= 21 && rand <= 24){
+                    piece = '7';
+                }else if (rand >= 25 && rand <= 28){
+                    piece = '6';
+                }else if (rand >= 29 && rand <= 32){
                     piece = '5';
-                }else if (rand == 8){
+                }else if (rand >= 33 && rand <= 35){
                     piece = '4';
-                }else if (rand == 9){
+                }else if (rand >= 36 && rand <= 37){
                     piece = '3';
-                }else if (rand == 10){
+                }else if (rand == 38){
                     piece = '2';
-                }else if (rand == 11){
+                }else if (rand == 39){
                     piece = '1';
                 }
                 String pieceName = pieceSelector.get(piece);
@@ -169,9 +227,11 @@ public class Player {
                     piece = '0';
                 }
             }
-            piecesLeft--;
-            b.addPiece(piece, currentX, currentY);
-            availablePieces.put(pieceSelector.get(piece), availablePieces.get(pieceSelector.get(piece)) - 1);
+            if (b.at(currentX, currentY) instanceof GenericPiece){
+                piecesLeft--;
+                b.addPiece(piece, currentX, currentY);
+                availablePieces.put(pieceSelector.get(piece), availablePieces.get(pieceSelector.get(piece)) - 1);
+            }
             currentX++;
             if (currentX == 11){
                 currentX = 1;

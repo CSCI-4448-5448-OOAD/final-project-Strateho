@@ -33,10 +33,10 @@ public class Board {
             bluePlayer.playerPlace(this);
         }else if (numPlayers == 1){
             redPlayer.playerPlace(this);
-            bluePlayer.randomPlace(this);
+            bluePlayer.randomPlace(this, null);
         }else{
-            redPlayer.randomPlace(this);
-            bluePlayer.randomPlace(this);
+            redPlayer.randomPlace(this, null);
+            bluePlayer.randomPlace(this, null);
         }
     }
 
@@ -56,11 +56,15 @@ public class Board {
     }
 
     
-    public void removePiece(int x, int y){
+    public void removePiece(int x, int y, boolean leaveGeneric){
         Piece current = board[x-1][y-1].getPiece();
         if (current != null){
             current.remove();
-            board[x-1][y-1].setPiece(null);
+            if (leaveGeneric == false){
+                board[x-1][y-1].setPiece(null);
+            }else{
+                board[x-1][y-1].setPiece(new GenericPiece(current.getColor()));
+            }
         }else{
             System.out.println("There is no piece at that location!");
         }
@@ -82,7 +86,11 @@ public class Board {
                             System.out.print('?');
                         }
                     }else{
-                        System.out.print(' ');
+                        if (board[j][i].isLake()){
+                            System.out.print('~');
+                        }else{
+                            System.out.print(' ');
+                        }
                     }
                 }
                 System.out.println();

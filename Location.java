@@ -42,4 +42,8 @@ public class Location{
     public void setPiece(GenericPiece gp){
         piece = gp;
     }
+
+    public boolean isLake(){
+        return lake;
+    }
 }
