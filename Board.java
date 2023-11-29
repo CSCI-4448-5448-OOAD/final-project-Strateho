@@ -75,19 +75,23 @@ public class Board {
     }
 
     public void print(char color){
+        String RESET = "\u001B[0m";
+        String RED = "\u001B[31m";
+        String BLUE = "\u001B[34m";
+        String CYAN = "\u001B[36m";
         if (color == 'r'){
             for (int i = 0; i < 10; i++){
                 for (int j = 0; j < 10; j++){
                     Piece current = board[j][i].getPiece();
                     if (current != null){
                         if (current.getColor() == 'r'){
-                            System.out.print(current.getVal());
+                            System.out.print(RED + current.getVal() + RESET);
                         }else{
-                            System.out.print('?');
+                            System.out.print(BLUE + '?' + RESET);
                         }
                     }else{
                         if (board[j][i].isLake()){
-                            System.out.print('~');
+                            System.out.print(CYAN + '~' + RESET);
                         }else{
                             System.out.print(' ');
                         }
@@ -101,12 +105,16 @@ public class Board {
                     Piece current = board[j][i].getPiece();
                     if (current != null){
                         if (current.getColor() == 'b'){
-                            System.out.print(current.getVal());
+                            System.out.print(BLUE + current.getVal() + RESET);
                         }else{
-                            System.out.print('?');
+                            System.out.print(RED + '?' + RESET);
                         }
                     }else{
-                        System.out.print(' ');
+                        if (board[j][i].isLake()){
+                            System.out.print(CYAN + '~' + RESET);
+                        }else{
+                            System.out.print(' ');
+                        }
                     }
                 }
                 System.out.println();
