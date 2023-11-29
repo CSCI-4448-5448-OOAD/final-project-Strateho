@@ -1,18 +1,36 @@
+import java.util.*;
+
 class GameDriver {
     private Board board;
+    int turn = 0;
+    // private List<Observer> observers = new ArrayList<>();
+
     public static void main(String[] args) {
         GameDriver game = new GameDriver();
-        while(true){
-            // Logger logger = Logger.getInstance(game.turn);
-            // game.addObserver(logger);
+        Player player1 = new Player('r');
+        Player player2 = new Player('b');
+        game.board = new Board(2);
+        boolean play = true;
+        
+        Logger logger = Logger.getInstance(game.turn);
+        logger.update("Turn 0: Setup Board");
+        logger.closeLogFile();
+         
+        while(play){
+            game.turn++;
 
-            // game.playRound();
-            // game.turn++;
+            logger = Logger.getInstance(game.turn);
+            String t = "Turn " + game.turn;
+            logger.update(t);
 
-            // logger.closeLogFile();
-            // game.removeObserver(logger);
-            game.board = new Board(1);
-            System.out.println("no way that worked");
+            logger.update(player1.turn(game.board));
+            logger.update(player2.turn(game.board));
+
+            logger.closeLogFile();
+
+            // System.out.print(game.turn);
+
+            if(game.turn > 10) break; //to stop inf loop for now
         }
     }
 }
