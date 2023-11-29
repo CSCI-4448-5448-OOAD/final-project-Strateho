@@ -241,7 +241,32 @@ public class Player {
     }
 
     public String turn(Board b){
-        String event = color + ": " + "add functionality";
+        String event = color + ": ";
+
+        Scanner input = new Scanner(System.in);
+        
+        Piece pickedPiece = null;
+        while(pickedPiece == null){
+            System.out.println("Which piece would u like to move? (Enter location)");
+            int x = input.nextInt();
+            int y = input.nextInt();
+    
+            pickedPiece = b.at(x, y);
+        }
+
+        event += "Moved " + pickedPiece.getVal();
+        
+        Piece attackPiece = null;
+        while(attackPiece == null){
+            System.out.println("Where would u like to move it?");
+            int x = input.nextInt();
+            int y = input.nextInt();
+
+            attackPiece = b.at(x, y);
+        }
+
+        event += " and attacked " + attackPiece.getVal();
+
         return event;
     }
 }
