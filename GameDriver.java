@@ -1,4 +1,5 @@
 class GameDriver {
+    private Board board;
     public static void main(String[] args) {
         GameDriver game = new GameDriver();
         while(true){
@@ -10,10 +11,8 @@ class GameDriver {
 
             // logger.closeLogFile();
             // game.removeObserver(logger);
+            game.board = new Board(1);
+            System.out.println("no way that worked");
         }
-    }
-
-    public void setup(int numPlayers){
-        Board b = new Board(numPlayers);
     }
 }

@@ -11,6 +11,11 @@ public class Board {
     public Board (int numPlayers){
         this.numPlayers = numPlayers;
         board = new Location[10][10];
+        for (int i = 1; i <= 10; i++){
+            for (int j = 1; j <= 10; j++){
+                board[i-1][j-1] = new Location(i, j);
+            }
+        }
         
         for (int i = 0; i < 4; i++){
             for (int j = 0; j < 10; j++){
@@ -23,19 +28,26 @@ public class Board {
         redPlayer = new Player('r');
         bluePlayer = new Player('b');
 
+        if (numPlayers == 2){
+            redPlayer.playerPlace(this);
+            bluePlayer.playerPlace(this);
+        }else if (numPlayers == 1){
+            redPlayer.playerPlace(this);
+            bluePlayer.randomPlace(this);
+        }else{
+            redPlayer.randomPlace(this);
+            bluePlayer.randomPlace(this);
+        }
     }
 
     public void addPiece(char type, int x, int y){
         Piece current = board[x-1][y-1].getPiece();
         if (type == 'f'){
-            //Piece p = new Flag(current.getColor());
-            //b.addPiece(p, x, y);
+            board[x-1][y-1].setPiece(new Flag(current));
         }else if (type == 'b'){
-            //Piece p = new Bomb(current.getColor());
-            //b.addPiece(p, x, y);
+            board[x-1][y-1].setPiece(new Bomb(current));
         }else if (type == 's'){
-            //Piece p = new Spy(current.getColor());
-            //b.addPiece(p, x, y);
+            board[x-1][y-1].setPiece(new Spy(current));
         }else{
             int level = type - '0';
             assert(level > 0 && level <= 9);
@@ -59,6 +71,38 @@ public class Board {
     }
 
     public void print(char color){
-        return;
+        if (color == 'r'){
+            for (int i = 0; i < 10; i++){
+                for (int j = 0; j < 10; j++){
+                    Piece current = board[j][i].getPiece();
+                    if (current != null){
+                        if (current.getColor() == 'r'){
+                            System.out.print(current.getVal());
+                        }else{
+                            System.out.print('?');
+                        }
+                    }else{
+                        System.out.print(' ');
+                    }
+                }
+                System.out.println();
+            }
+        }else if (color == 'b'){
+            for (int i = 9; i >= 0; i--){
+                for (int j = 9; j >= 0; j--){
+                    Piece current = board[j][i].getPiece();
+                    if (current != null){
+                        if (current.getColor() == 'b'){
+                            System.out.print(current.getVal());
+                        }else{
+                            System.out.print('?');
+                        }
+                    }else{
+                        System.out.print(' ');
+                    }
+                }
+                System.out.println();
+            }
+        }
     }
 }
