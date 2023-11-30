@@ -40,6 +40,10 @@ public class Board {
         }
     }
 
+    public boolean isLakeLoc(int x, int y){
+        return board[x-1][y-1].isLake();
+    }
+
     public void addPiece(char type, int x, int y){
         Piece current = board[x-1][y-1].getPiece();
         if (type == 'f'){

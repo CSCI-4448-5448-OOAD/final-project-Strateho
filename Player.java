@@ -247,19 +247,30 @@ public class Player {
 
         int x = 0;
         int y = 0;
+
+        int x2 = 0;
+        int y2 = 0;
         
         Piece pickedPiece = null;
         while(pickedPiece == null){
             System.out.println("Which piece would u like to move? (Enter location)");
             x = input.nextInt();
             y = input.nextInt();
+
+            if(x > 10 || x < 1 || y > 10 || y < 1 || b.isLakeLoc(x,y)) {
+                System.out.println("Invalid location. Please pick a location where you have a piece.");
+                continue;
+            }
     
             pickedPiece = b.at(x, y);
             b.removePiece(x, y, false);
 
             if(pickedPiece.getColor() != color){
                 System.out.println("You must pick your own piece.");
-                pickedPiece = null;
+            }
+
+            if(pickedPiece.getVal() == 'f' || pickedPiece.getVal() == 'b'){
+                System.out.println("You cannot move that piece.");
             }
         }
 
@@ -268,21 +279,25 @@ public class Player {
         Piece attackPiece = pickedPiece;
         while(attackPiece != null && attackPiece.getColor() == color){
             System.out.println("Where would u like to move it?");
-            x = input.nextInt();
-            y = input.nextInt();
+            x2 = input.nextInt();
+            y2 = input.nextInt();
+
+            if(Math.abs(x - x2) > 1 || Math.abs(y - y2) > 1){
+                System.out.println("You cannot move your piece there.");
+                continue;
+            }
 
             attackPiece = b.at(x, y);
             if(attackPiece == null) break;
 
             if(attackPiece.getColor() == color){
                 System.out.println("You cannot attack your own pieces.");
-                attackPiece = null;
             }
         }
 
         if(attackPiece == null) {
-            event += " to the pos " + x + "," + y;
-            b.setPiece(x, y, pickedPiece);
+            event += " to the pos " + x2 + "," + y2;
+            b.setPiece(x2, y2, pickedPiece);
         } else {
             event += " and attacked " + attackPiece.getVal();
         }
