@@ -252,27 +252,32 @@ public class Player {
         int y2 = 0;
         
         Piece pickedPiece = null;
-        while(pickedPiece == null){
+        while(true){
             System.out.println("Which piece would u like to move? (Enter location)");
             x = input.nextInt();
             y = input.nextInt();
 
-            if(x > 10 || x < 1 || y > 10 || y < 1 || b.isLakeLoc(x,y)) {
+            pickedPiece = b.at(x, y);
+
+            if(x > 10 || x < 1 || y > 10 || y < 1 || b.isLakeLoc(x,y) || pickedPiece == null) {
                 System.out.println("Invalid location. Please pick a location where you have a piece.");
                 continue;
             }
-    
-            pickedPiece = b.at(x, y);
-            b.removePiece(x, y, false);
 
             if(pickedPiece.getColor() != color){
                 System.out.println("You must pick your own piece.");
+                continue;
             }
 
             if(pickedPiece.getVal() == 'f' || pickedPiece.getVal() == 'b'){
                 System.out.println("You cannot move that piece.");
+                continue;
             }
+
+            break;
         }
+
+        b.removePiece(x, y, false);
 
         event += "Moved " + pickedPiece.getVal();
         
@@ -282,7 +287,7 @@ public class Player {
             x2 = input.nextInt();
             y2 = input.nextInt();
 
-            if(Math.abs(x - x2) > 1 || Math.abs(y - y2) > 1){
+            if(Math.abs(x - x2) + Math.abs(y - y2) > 1){
                 System.out.println("You cannot move your piece there.");
                 continue;
             }
@@ -299,9 +304,26 @@ public class Player {
             event += " to the pos " + x2 + "," + y2;
             b.setPiece(x2, y2, pickedPiece);
         } else {
-            event += " and attacked " + attackPiece.getVal();
+            Piece winner = attack(pickedPiece, attackPiece);
+            if(winner.getVal() == 'f'){
+                event += "and found the flag!!";
+                return event;
+            }
+            if(winner == attackPiece){
+                event += " and attacked " + attackPiece.getVal() + " and lost.";
+            } else {
+                event += " and attacked " + attackPiece.getVal() + " and won.";
+            }
         }
 
         return event;
+    }
+
+    public Piece attack(Piece attacker, Piece attacked){
+        if(attacked.getVal() == 'b' && attacker.getVal() == 3) return attacker;
+        if(attacker.getVal() == 1 && attacked.getVal() == 10) return attacker;
+        if(attacker.getVal() == 10 && attacked.getVal() == 1) return attacked;
+        if(attacker.getVal() > attacked.getVal()) return attacker;
+        return attacked;
     }
 }
