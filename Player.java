@@ -244,28 +244,46 @@ public class Player {
         String event = color + ": ";
 
         Scanner input = new Scanner(System.in);
+
+        int x = 0;
+        int y = 0;
         
         Piece pickedPiece = null;
         while(pickedPiece == null){
             System.out.println("Which piece would u like to move? (Enter location)");
-            int x = input.nextInt();
-            int y = input.nextInt();
+            x = input.nextInt();
+            y = input.nextInt();
     
             pickedPiece = b.at(x, y);
+
+            if(pickedPiece.getColor() != color){
+                System.out.println("You must pick your own piece.");
+                pickedPiece = null;
+            }
         }
 
         event += "Moved " + pickedPiece.getVal();
         
-        Piece attackPiece = null;
-        while(attackPiece == null){
+        Piece attackPiece = pickedPiece;
+        while(attackPiece != null && attackPiece.getColor() == color){
             System.out.println("Where would u like to move it?");
-            int x = input.nextInt();
-            int y = input.nextInt();
+            x = input.nextInt();
+            y = input.nextInt();
 
             attackPiece = b.at(x, y);
+            if(attackPiece == null) break;
+
+            if(attackPiece.getColor() == color){
+                System.out.println("You cannot attack your own pieces.");
+                attackPiece = null;
+            }
         }
 
-        event += " and attacked " + attackPiece.getVal();
+        if(attackPiece == null) {
+            event += " to the pos " + x + "," + y;
+        } else {
+            event += " and attacked " + attackPiece.getVal();
+        }
 
         return event;
     }
