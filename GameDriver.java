@@ -6,6 +6,9 @@ class GameDriver {
     // private List<Observer> observers = new ArrayList<>();
 
     public static void main(String[] args) {
+        // char[] bombCharacter = Character.toChars(0x1F4A3);
+        // System.out.println("Bomb: " + new String(bombCharacter));
+
         GameDriver game = new GameDriver();
         Player player1 = new Player('r');
         Player player2 = new Player('b');
@@ -15,7 +18,7 @@ class GameDriver {
         Logger logger = Logger.getInstance(game.turn);
         logger.update("Turn 0: Setup Board");
         logger.closeLogFile();
-         
+
         while(play){
             game.turn++;
 
