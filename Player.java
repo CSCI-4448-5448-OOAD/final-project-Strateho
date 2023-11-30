@@ -255,6 +255,7 @@ public class Player {
             y = input.nextInt();
     
             pickedPiece = b.at(x, y);
+            b.removePiece(x, y, false);
 
             if(pickedPiece.getColor() != color){
                 System.out.println("You must pick your own piece.");
@@ -281,6 +282,7 @@ public class Player {
 
         if(attackPiece == null) {
             event += " to the pos " + x + "," + y;
+            b.setPiece(x, y, pickedPiece);
         } else {
             event += " and attacked " + attackPiece.getVal();
         }

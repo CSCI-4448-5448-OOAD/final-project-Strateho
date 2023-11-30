@@ -21,9 +21,13 @@ class GameDriver {
 
             logger = Logger.getInstance(game.turn);
             String t = "Turn " + game.turn;
+            System.out.println(t);
             logger.update(t);
 
+            game.board.print('r');
             logger.update(player1.turn(game.board));
+
+            game.board.print('b');
             logger.update(player2.turn(game.board));
 
             logger.closeLogFile();

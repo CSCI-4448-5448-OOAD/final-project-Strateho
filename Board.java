@@ -55,6 +55,9 @@ public class Board {
         }
     }
 
+    public void setPiece(int x, int y, Piece curr){
+        board[x-1][y-1].setPiece(curr);
+    }
     
     public void removePiece(int x, int y, boolean leaveGeneric){
         Piece current = board[x-1][y-1].getPiece();
