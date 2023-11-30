@@ -292,19 +292,18 @@ public class Player {
                 continue;
             }
 
-            attackPiece = b.at(x, y);
-            System.out.println(b.at(x, y));
-            if(attackPiece == null || attackPiece.getColor() != color) break;
+            attackPiece = b.at(x2, y2);
+            if(attackPiece == null) break;
 
-            System.out.println("You cannot attack your own pieces.");
+            if(attackPiece.getColor() == color){
+                System.out.println("You cannot attack your own pieces.");
+            }
         }
 
         if(attackPiece == null) {
-            System.out.println("did not attack");
             event += " to the pos " + x2 + "," + y2;
             b.setPiece(x2, y2, pickedPiece);
         } else {
-            System.out.println("ATTACKED");
             Piece winner = attack(pickedPiece, attackPiece);
             if(winner.getVal() == 'f'){
                 event += "and found the flag!!";
@@ -314,6 +313,7 @@ public class Player {
                 event += " and attacked " + attackPiece.getVal() + " and lost.";
             } else {
                 event += " and attacked " + attackPiece.getVal() + " and won.";
+                b.setPiece(x2, y2, pickedPiece);
             }
         }
 
