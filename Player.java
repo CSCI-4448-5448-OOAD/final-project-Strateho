@@ -269,7 +269,7 @@ public class Player {
                 continue;
             }
 
-            if(pickedPiece.getVal() == 'f' || pickedPiece.getVal() == 'b'){
+            if(pickedPiece.getVal() == 'F' || pickedPiece.getVal() == 'B'){
                 System.out.println("You cannot move that piece.");
                 continue;
             }
@@ -287,8 +287,11 @@ public class Player {
             x2 = input.nextInt();
             y2 = input.nextInt();
 
-            if(Math.abs(x - x2) + Math.abs(y - y2) > 1){
+            if(pickedPiece.getVal() != 9 && (Math.abs(x - x2) + Math.abs(y - y2) > 1)){
                 System.out.println("You cannot move your piece there.");
+                continue;
+            } else if (x - x2 != 0 && y - y2 != 0) {
+                System.out.println("You cannot move your piece there, you can only move one direction at a time.");
                 continue;
             }
 
@@ -309,6 +312,10 @@ public class Player {
                 event += "and found the flag!!";
                 return event;
             }
+            if(attackPiece.getVal() == 'b' && pickedPiece.getVal() == '9'){
+                event += " and diffuesed a bomb!!";
+                return event;
+            }
             if(winner == attackPiece){
                 event += " and attacked " + attackPiece.getVal() + " and lost.";
             } else {
@@ -321,10 +328,10 @@ public class Player {
     }
 
     public Piece attack(Piece attacker, Piece attacked){
-        if(attacked.getVal() == 'b' && attacker.getVal() == 3) return attacker;
-        if(attacker.getVal() == 1 && attacked.getVal() == 10) return attacker;
-        if(attacker.getVal() == 10 && attacked.getVal() == 1) return attacked;
-        if(attacker.getVal() > attacked.getVal()) return attacker;
+        if(attacked.getVal() == 'B' && attacker.getVal() == 8) return attacker;
+        if(attacked.getVal() == 8 && attacker.getVal() == 'B') return attacked;
+        if(attacker.getVal() == 'S' && attacked.getVal() == 1) return attacker;
+        if(attacker.getVal() < attacked.getVal()) return attacker;
         return attacked;
     }
 }
