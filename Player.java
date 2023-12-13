@@ -326,10 +326,10 @@ public class Player {
     }
 
     public Piece attack(Piece attacker, Piece attacked){
-        if(attacked.getVal() == 'b' && attacker.getVal() == 3) return attacker;
-        if(attacker.getVal() == 1 && attacked.getVal() == 10) return attacker;
-        if(attacker.getVal() == 10 && attacked.getVal() == 1) return attacked;
-        if(attacker.getVal() > attacked.getVal()) return attacker;
+        if(attacked.getVal() == 'B' && attacker.getVal() == 8) return attacker;
+        if(attacked.getVal() == 8 && attacker.getVal() == 'B') return attacked;
+        if(attacker.getVal() == 'S' && attacked.getVal() == 1) return attacker;
+        if(attacker.getVal() < attacked.getVal()) return attacker;
         return attacked;
     }
 }
