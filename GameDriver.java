@@ -18,7 +18,7 @@ class GameDriver {
         Logger logger = Logger.getInstance(game.turn);
         logger.update("Turn 0: Setup Board");
         logger.closeLogFile();
-
+        String event = "";
         while(play){
             game.turn++;
 
@@ -28,16 +28,27 @@ class GameDriver {
             logger.update(t);
 
             game.board.print('r');
-            logger.update(player1.turn(game.board));
+            event = player1.turn(game.board);
+            logger.update(event);
+            if(event.contains("found the flag")) {
+                logger.closeLogFile();
+                play = false;
+                break;
+            }
 
             game.board.print('b');
-            logger.update(player2.turn(game.board));
-
+            event = player2.turn(game.board);
+            logger.update(event);
+            if (event.contains("found the flag")) {
+                logger.closeLogFile();
+                play = false;
+                break;
+            }
             logger.closeLogFile();
 
             // System.out.print(game.turn);
 
-            if(game.turn > 10) break; //to stop inf loop for now
+            //if(game.turn > 10) break; //to stop inf loop for now
         }
     }
 }

@@ -9,14 +9,32 @@ public class Bomb extends DecoratedPiece{
     }
 
     @Override
-    public void move(Board board){
-        return;
+    public String move(Board board){
+        return "Tried, and failed disastorously, to move the bomb.";
     }
 
     @Override
     public boolean canMove(Board board, int curX, int curY){
-        System.out.println("I don't reccomend trying to move that, I think little timmy would agree if he was still with us.");
         return false;
     }
     
+    @Override
+    public int attack(Piece other){
+        return -3;
+    }
+
+    @Override
+    public int getX(){
+        return piece.getX();
+    }
+
+    @Override
+    public int getY(){
+        return piece.getY();
+    }
+
+    @Override
+    public void setPos(int x, int y){
+        piece.setPos(x, y);
+    }
 }

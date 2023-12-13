@@ -15,8 +15,8 @@ public abstract class DecoratedPiece implements Piece{
         return piece.getVal();
     }
 
-    public void move(Board board){
-        
+    public String move(Board board){
+        return piece.move(board);
     }
 
     public void remove(){
@@ -25,5 +25,18 @@ public abstract class DecoratedPiece implements Piece{
 
     public boolean canMove(Board board, int curX, int curY){
         return false;
+    }
+
+    public int attack(Piece other){
+        System.out.println("I don't think this piece should be attacking");
+        return -3;
+    }
+
+    public boolean isDiscovered(){
+        return piece.isDiscovered();
+    }
+
+    public void discover(){
+        piece.discover();
     }
 }
