@@ -88,19 +88,19 @@ public class Board {
         }
         int result = curr.attack(otherPiece);
         if (result == 0){
-            event += "and attacked a " + otherPiece.getVal() + ". The result is a tie and both pieces are removed.";
+            event += " and attacked a " + otherPiece.getVal() + ". The result is a tie and both pieces are removed.";
             this.removePiece(curX, curY, false);
             this.removePiece(newX, newY, false);
         }else if (result == 1){
-            event += "and attacked a " + otherPiece.getVal() + ". The result is a win and the " + otherPiece.getVal() + " is removed.";
+            event += " and attacked a " + otherPiece.getVal() + ". The result is a win and the " + otherPiece.getVal() + " is removed.";
             this.removePiece(newX, newY, false);
             curr.setPos(newX, newY);
             board[newX-1][newY-1].setPiece(curr);
         }else if (result == -1){
-            event += "and attacked a " + otherPiece.getVal() + ". The result is a loss and the " + curr.getVal() + " is removed.";
+            event += " and attacked a " + otherPiece.getVal() + ". The result is a loss and the " + curr.getVal() + " is removed.";
             this.removePiece(curX, curY, false);
         }else if (result == 2){
-            event += "and found the flag! " + curr.getColor() + " wins!";
+            event += " and found the flag! " + curr.getColor() + " wins!";
         }
         board[curX-1][curY-1].setPiece(null);
         return event;

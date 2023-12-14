@@ -21,8 +21,11 @@ public class Logger implements Observer {
         }
     }
 
-    public static Logger getInstance(int turnNumber) {
-        return new Logger(turnNumber);
+    public static Logger getInstance(int turnNumber) { // implements singleton pattern, does not allow for two to exist
+        if (instance == null) {
+            instance = new Logger(turnNumber);
+        }
+        return instance;
     }
 
     @Override
@@ -33,6 +36,7 @@ public class Logger implements Observer {
     }
 
     public void closeLogFile() { // closes the file
+        instance = null;
         if (logFile != null) {
             logFile.close();
         }
