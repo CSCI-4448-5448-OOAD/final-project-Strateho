@@ -35,7 +35,9 @@ class GameDriver {
                 play = false;
                 break;
             }
-
+            for (int i = 0; i < 40; i++){
+                System.out.println();
+            }
             game.board.print('b');
             event = player2.turn(game.board);
             logger.update(event);
