@@ -1,4 +1,5 @@
 public class Bomb extends DecoratedPiece{
+    //Class for the bomb
     public Bomb(Piece p){
         super(p);
     }

@@ -1,4 +1,5 @@
 public interface Piece{
+    //Interface for all pieces
     char getColor();
     char getVal();
     String move(Board board);

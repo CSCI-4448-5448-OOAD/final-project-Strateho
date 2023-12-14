@@ -16,6 +16,7 @@ public class Spy extends DecoratedPiece {
 
     @Override
     public String move(Board board) {
+        //Move like a numbered piece
         String event = "Moved Spy to ";
         Scanner input = new Scanner(System.in);
         if (updatedMoves == true) {
@@ -45,6 +46,7 @@ public class Spy extends DecoratedPiece {
 
     @Override
     public boolean canMove(Board board, int curX, int curY) {
+        //Check if the piece can move and update the moves array
         boolean canMove = false;
         updatedMoves = true;
         int moveNum = 0;
@@ -77,6 +79,7 @@ public class Spy extends DecoratedPiece {
 
     @Override
     public int attack(Piece other) {
+        //The spy only beats the 1
         char otherVal = other.getVal();
         other.discover();
         this.discover();

@@ -14,6 +14,9 @@ public class Player {
     }
 
     public void playerPlace(Board b){
+        //Place Pieces manually
+
+        //Initialize available pieces
         HashMap<String, Integer> availablePieces = new HashMap<String, Integer>();
         HashMap<Character, String> pieceSelector = new HashMap<Character, String>();
         availablePieces.put("flag", 1);
@@ -53,6 +56,8 @@ public class Player {
             minY = 7;
         }
         boolean confirmedDone = false;
+
+        //Place pieces
         while (piecesLeft != 0 && confirmedDone == false){
             b.print(color);
             System.out.println("What piece would you like to place?");
@@ -97,6 +102,7 @@ public class Player {
                 }
             }else{
                 if (piece == 'r'){
+                    //Randomize remaining pieces
                     System.out.println("Are you sure you want to randomize your remaining pieces? (y/n)");
                     char randomize = input.next().charAt(0);
                     if (randomize == 'y'){
@@ -106,6 +112,7 @@ public class Player {
                         System.out.println("Returning to piece selection.");
                     }
                 }else if (piece == 'p'){
+                    //Remove a piece
                     if (piecesLeft == 40){
                         System.out.println("You have not placed any pieces yet.");
                         continue;
@@ -148,6 +155,9 @@ public class Player {
     }
 
     public void randomPlace(Board b, HashMap<String, Integer> availablePieces){
+        //Randomly place remaining pieces
+        
+        //Initialize available pieces
         if (availablePieces == null){
             availablePieces = new HashMap<String, Integer>();
             availablePieces.put("flag", 1);
@@ -163,7 +173,6 @@ public class Player {
             availablePieces.put("general", 1);
             availablePieces.put("marshal", 1);
         }
-        //HashMap<String, Integer> availablePieces = new HashMap<String, Integer>();
         HashMap<Character, String> pieceSelector = new HashMap<Character, String>();
         pieceSelector.put('f', "flag");
         pieceSelector.put('b', "bomb");
@@ -195,6 +204,8 @@ public class Player {
         int currentY = minY;
         while (piecesLeft != 0){
             char piece = '0';
+
+            //Randomly select a piece till there are no more pieces left
             while (piece == '0'){
                 int rand = (int)(Math.random() * 40);
                 if (rand == 0){
@@ -241,6 +252,8 @@ public class Player {
     }
 
     public String turn(Board b){
+        //Take turn and make move
+
         String event = color + ": ";
 
         Scanner input = new Scanner(System.in);
@@ -274,18 +287,10 @@ public class Player {
             break;
         }
 
-        //event += "Moved " + pickedPiece.getVal();
 
+        //Move piece
         event += pickedPiece.move(b);
 
         return event;
-    }
-
-    public Piece attack(Piece attacker, Piece attacked){
-        if(attacked.getVal() == 'B' && attacker.getVal() == 8) return attacker;
-        if(attacked.getVal() == 8 && attacker.getVal() == 'B') return attacked;
-        if(attacker.getVal() == 'S' && attacked.getVal() == 1) return attacker;
-        if(attacker.getVal() < attacked.getVal()) return attacker;
-        return attacked;
     }
 }

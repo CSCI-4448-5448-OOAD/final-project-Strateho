@@ -1,4 +1,6 @@
 public abstract class DecoratedPiece implements Piece{
+    //Abstract class for decorating generic pieces
+
     boolean inPlay;
     protected Piece piece;
 

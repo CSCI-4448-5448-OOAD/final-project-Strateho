@@ -1,4 +1,6 @@
 public class PieceFactory {
+    //Factory for encapsulating the creation of pieces
+
     public static NumberedPiece createNumberedPiece(Piece p, int level) {
         return new NumberedPiece(p, level);
     }

@@ -2,6 +2,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class NumberedPiece extends DecoratedPiece{
+    //Class for all the normal pieces
+
     int level;
     int[][] moves = new int[18][2];
     boolean updatedMoves = false;
@@ -13,6 +15,7 @@ public class NumberedPiece extends DecoratedPiece{
 
     @Override
     public char getVal(){
+        //Display value
         return (char)(level + '0');
     }
 
@@ -23,11 +26,14 @@ public class NumberedPiece extends DecoratedPiece{
         if (updatedMoves == true){
             System.out.println("Where would you like to move this piece?");
             int moveNum = 0;
+            
             while (moves[moveNum][0] != 0 && moves[moveNum][1] != 0){
                 System.out.println((moveNum+1) + ": " + moves[moveNum][0] + ", " + moves[moveNum][1]);
                 moveNum++;
             }
+
             int moveChoice = input.nextInt();
+            //Pick a valid move
             while (moveChoice < 1 || moveChoice > moveNum){
                 System.out.println("Please enter a valid move number.");
                 moveChoice = input.nextInt();
@@ -35,9 +41,11 @@ public class NumberedPiece extends DecoratedPiece{
             int newX = moves[moveChoice-1][0];
             int newY = moves[moveChoice-1][1];
             event += newX + ", " + newY;
+            //Move the piece on the board
             event += board.move(this, newX, newY);
         }
         
+        //Reset the moves
         for (int i = 0; i < 18; i++){
             Arrays.fill(moves[i], 0);
         }
@@ -47,10 +55,13 @@ public class NumberedPiece extends DecoratedPiece{
 
     @Override
     public boolean canMove(Board board, int curX, int curY){
+        //Check if the piece can move and update the moves array
+
         boolean canMove = false;
         updatedMoves = true;
         int moveNum = 0;
         if (this.level != 9){
+            //For each direction check that the location is valid, the location is not a lake, and the location is empty or has an enemy piece
             if (curX+1 < 10 && !board.isLakeLoc(curX+1, curY) && (board.at(curX+1, curY) == null || board.at(curX+1, curY).getColor() != this.getColor())){
                 moves[moveNum][0] = curX+1;
                 moves[moveNum][1] = curY;
@@ -76,6 +87,8 @@ public class NumberedPiece extends DecoratedPiece{
                 canMove = true;
             }
         }else{
+            //The 9 can move any number of spaces in any direction
+            //For each direction check that the location is valid, the location is not a lake, and the location is empty or has an enemy piece
             int i = 1;
             while (curX+i < 10 && !board.isLakeLoc(curX+i, curY) && ((board.at(curX+i, curY) == null || board.at(curX+i, curY).getColor() != this.getColor()))){
                 moves[moveNum][0] = curX+i;
@@ -127,6 +140,7 @@ public class NumberedPiece extends DecoratedPiece{
     @Override
     public int attack(Piece other){
         char otherVal = other.getVal();
+        //Allow players to see pieces that have been in combat
         other.discover();
         this.discover();
         if (other instanceof NumberedPiece){

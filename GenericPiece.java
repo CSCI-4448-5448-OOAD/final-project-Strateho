@@ -1,4 +1,6 @@
 public class GenericPiece implements Piece{
+    //Generic piece class for encapsulating common piece functionality and initializing board
+
     private boolean alive;
     private char color;
     private int x;

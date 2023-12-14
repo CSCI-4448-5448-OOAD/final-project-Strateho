@@ -1,4 +1,6 @@
 public class Flag extends DecoratedPiece{
+    //Class for the flag
+
     public Flag(Piece p){
         super(p);
     }

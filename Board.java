@@ -11,12 +11,15 @@ public class Board {
     public Board (int numPlayers){
         this.numPlayers = numPlayers;
         board = new Location[10][10];
+        
+        //Initialize board
         for (int i = 1; i <= 10; i++){
             for (int j = 1; j <= 10; j++){
                 board[i-1][j-1] = new Location(i, j);
             }
         }
         
+        //Place generic pieces
         for (int i = 0; i < 4; i++){
             for (int j = 0; j < 10; j++){
                 board[j][i].setPiece(new GenericPiece('r', j+1, i+1));
@@ -28,6 +31,7 @@ public class Board {
         redPlayer = new Player('r');
         bluePlayer = new Player('b');
 
+        //Make players place their pieces
         if (numPlayers == 2){
             redPlayer.playerPlace(this);
             bluePlayer.playerPlace(this);
@@ -45,6 +49,7 @@ public class Board {
     }
 
     public void addPiece(char type, int x, int y){
+        //Assign piece type to location
         Piece current = board[x-1][y-1].getPiece();
         if (type == 'f'){
             board[x-1][y-1].setPiece(PieceFactory.createFlag(current));
@@ -61,6 +66,7 @@ public class Board {
 
     
     public void removePiece(int x, int y, boolean leaveGeneric){
+        //Remove piece from location
         Piece current = board[x-1][y-1].getPiece();
         if (current != null){
             current.remove();
@@ -75,6 +81,7 @@ public class Board {
     }
 
     public String move(Piece curr, int newX, int newY){
+        //Move piece to new location and attack if necessary
         String event = "";
         int curX = curr.getX();
         int curY = curr.getY();
