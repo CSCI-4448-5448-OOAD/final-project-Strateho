@@ -47,22 +47,18 @@ public class Board {
     public void addPiece(char type, int x, int y){
         Piece current = board[x-1][y-1].getPiece();
         if (type == 'f'){
-            board[x-1][y-1].setPiece(new Flag(current));
+            board[x-1][y-1].setPiece(PieceFactory.createFlag(current));
         }else if (type == 'b'){
-            board[x-1][y-1].setPiece(new Bomb(current));
+            board[x-1][y-1].setPiece(PieceFactory.createBomb(current));
         }else if (type == 's'){
-            board[x-1][y-1].setPiece(new Spy(current));
+            board[x-1][y-1].setPiece(PieceFactory.createSpy(current));
         }else{
             int level = type - '0';
             assert(level > 0 && level <= 9);
-            board[x-1][y-1].setPiece(new NumberedPiece(current, level));
+            board[x-1][y-1].setPiece(PieceFactory.createNumberedPiece(current, level));
         }
     }
 
-    //private void setPiece(int x, int y, Piece curr){
-    //    curr.setPos(x, y);
-    //    board[x-1][y-1].setPiece(curr);
-    //}
     
     public void removePiece(int x, int y, boolean leaveGeneric){
         Piece current = board[x-1][y-1].getPiece();
