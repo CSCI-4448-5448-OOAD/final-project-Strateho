@@ -247,9 +247,6 @@ public class Player {
 
         int x = 0;
         int y = 0;
-
-        int x2 = 0;
-        int y2 = 0;
         
         Piece pickedPiece = null;
         while(true){
@@ -282,47 +279,6 @@ public class Player {
         event += pickedPiece.move(b);
 
         return event;
-        // b.removePiece(x, y, false);
-
-        // event += "Moved " + pickedPiece.getVal();
-        
-        // Piece attackPiece = pickedPiece;
-        // while(attackPiece != null && attackPiece.getColor() == color){
-        //     System.out.println("Where would u like to move it?");
-        //     x2 = input.nextInt();
-        //     y2 = input.nextInt();
-
-        //     if(Math.abs(x - x2) + Math.abs(y - y2) > 1){
-        //         System.out.println("You cannot move your piece there.");
-        //         continue;
-        //     }
-
-        //     attackPiece = b.at(x2, y2);
-        //     if(attackPiece == null) break;
-
-        //     if(attackPiece.getColor() == color){
-        //         System.out.println("You cannot attack your own pieces.");
-        //     }
-        // }
-
-        // if(attackPiece == null) {
-        //     event += " to the pos " + x2 + "," + y2;
-        //     b.setPiece(x2, y2, pickedPiece);
-        // } else {
-        //     Piece winner = attack(pickedPiece, attackPiece);
-        //     if(winner.getVal() == 'f'){
-        //         event += "and found the flag!!";
-        //         return event;
-        //     }
-        //     if(winner == attackPiece){
-        //         event += " and attacked " + attackPiece.getVal() + " and lost.";
-        //     } else {
-        //         event += " and attacked " + attackPiece.getVal() + " and won.";
-        //         b.setPiece(x2, y2, pickedPiece);
-        //     }
-        // }
-
-        // return event;
     }
 
     public Piece attack(Piece attacker, Piece attacked){
